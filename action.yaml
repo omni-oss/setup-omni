@@ -23,9 +23,15 @@ runs:
       run: |
         curl -fsSL https://raw.githubusercontent.com/omni-oss/omni/main/installers/windows.ps1 | powershell
 
-    - name: Add omni to PATH
+    - name: Add omni to PATH (Linux/macOS)
+      if: runner.os != 'Windows'
       shell: bash
       run: echo "$HOME/.omni/bin" >> $GITHUB_PATH
+
+    - name: Add omni to PATH (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: echo "$env:HOME\AppData\Local\omni\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Verify omni
       shell: bash
