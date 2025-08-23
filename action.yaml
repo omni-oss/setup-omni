@@ -34,7 +34,14 @@ runs:
       run: |
         Add-Content -Path $env:GITHUB_PATH -Value "$env:USERPROFILE\.omni\bin"
 
-    - name: Verify omni
+    - name: Verify omni (Linux/macOS)
+      if: runner.os != 'Windows'
       shell: bash
+      run: |
+        omni --version
+
+    - name: Verify omni (Windows)
+      if: runner.os != 'Windows'
+      shell: pwsh
       run: |
         omni --version
