@@ -41,7 +41,7 @@ runs:
         omni --version
 
     - name: Verify omni (Windows)
-      if: runner.os != 'Windows'
+      if: runner.os == 'Windows'
       shell: pwsh
       run: |
         omni --version
