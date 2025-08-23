@@ -8,7 +8,7 @@ runs:
     - name: Cache omni installation
       uses: actions/cache@v4
       with:
-        path: ~/.omni
+        path: ${{ runner.os == 'Windows' && '${{ env.LOCALAPPDATA }}\omni\bin' || '$HOME/.omni/bin' }}
         key: ${{ runner.os }}-omni
 
     - name: Install omni (Linux/macOS)
@@ -31,7 +31,7 @@ runs:
     - name: Add omni to PATH (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: echo "$env:HOME\AppData\Local\omni\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      run: echo "${{ env.LOCALAPPDATA }}\omni\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Verify omni
       shell: bash
