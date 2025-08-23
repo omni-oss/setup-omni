@@ -1,0 +1,40 @@
+name: "Setup Omni"
+description: "Install and cache omni CLI across platforms"
+author: "omni-oss"
+inputs: {}
+runs:
+  using: "composite"
+  steps:
+    - name: Cache omni installation
+      uses: actions/cache@v4
+      with:
+        path: ~/.omni
+        key: ${{ runner.os }}-omni
+
+    - name: Install omni (Linux/macOS)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/omni-oss/omni/main/installers/unix.sh | sh
+
+    - name: Install omni (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/omni-oss/omni/main/installers/windows.ps1 | powershell
+
+    - name: Add omni to PATH (Linux/macOS)
+      if: runner.os != 'Windows'
+      shell: bash
+      run: echo "$HOME/.omni/bin" >> $GITHUB_PATH
+
+    - name: Add omni to PATH (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Add-Content -Path $env:GITHUB_PATH -Value "$env:USERPROFILE\.omni\bin"
+
+    - name: Verify omni
+      shell: bash
+      run: |
+        omni --version
