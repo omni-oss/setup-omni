@@ -10,8 +10,8 @@ runs:
       with:
         path: ${{ runner.os == 'Windows' && '${{ env.LOCALAPPDATA }}\omni\bin' || '$HOME/.omni/bin' }}
         key: ${{ runner.os }}-omni-cli-binary
-	restore-keys: |
-	  ${{ runner.os }}-omni-cli-binary
+        restore-keys: |
+          ${{ runner.os }}-omni-cli-binary
 
     - name: Install omni (Linux/macOS)
       if: runner.os != 'Windows'
