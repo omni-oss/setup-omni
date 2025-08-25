@@ -34,13 +34,6 @@ runs:
       run: |
         $installDir = "$env:LOCALAPPDATA\omni"
         $binDir = "$installDir\bin"
-        echo "InstallDir: $installDir"
-        echo "BinDir: $binDir"
-        # List the contents of the install directory
-        Get-ChildItem $installDir
-        # List the contents of the bin directory
-        Get-ChildItem $binDir
-
         "$binDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Verify omni
