@@ -30,7 +30,7 @@ runs:
       shell: pwsh
       run: |
         $env:GITHUB_TOKEN = "${{ inputs.github-token }}"
-        curl -fsSL https://raw.githubusercontent.com/omni-oss/omni/main/installers/windows.ps1 | powershell
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/omni-oss/omni/main/installers/windows.ps1" -UseBasicParsing | Invoke-Expression
 
     - name: Add omni to PATH (Linux/macOS)
       if: runner.os != 'Windows'
